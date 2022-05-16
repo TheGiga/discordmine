@@ -1,4 +1,5 @@
 import random
+import uuid
 
 import discord
 from discord.ui import Item
@@ -12,7 +13,7 @@ class Miner(discord.ui.View):
         super().__init__(*items)
         self.author = author
 
-    @discord.ui.button(label="Pick!", style=discord.ButtonStyle.gray, emoji="⛏")
+    @discord.ui.button(label="Pick!", style=discord.ButtonStyle.gray, emoji="⛏", custom_id=str(uuid.uuid4()))
     async def miner_counter(self, button: discord.ui.Button, interaction: discord.Interaction):
         if interaction.user.guild is None:
             return
@@ -21,12 +22,12 @@ class Miner(discord.ui.View):
             return await interaction.response.send_message(ephemeral=True, content=":x: Its not your mine, use `/mine`")
 
         broke = random.randint(1, 100)
-        print(broke)
         if broke < 3:
-            return await interaction.response.edit_message(
+            await interaction.response.edit_message(
                 content="😳 Oops, your pickaxe broke, use `/mine` to start again.",
-                view=None
+                view=None,
             )
+            return await interaction.message.delete(delay=3)
 
         user = await User.get_or_create(interaction.user)
         user.total += 1
