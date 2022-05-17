@@ -9,16 +9,16 @@ from lib.database import db_session
 
 
 class Miner(discord.ui.View):
-    def __init__(self, author: discord.Member, *items: Item):
+    def __init__(self, author_id: int, *items: Item):
         super().__init__(*items)
-        self.author = author
+        self.author_id = author_id
 
     @discord.ui.button(label="Pick!", style=discord.ButtonStyle.gray, emoji="⛏", custom_id=str(uuid.uuid4()))
     async def miner_counter(self, button: discord.ui.Button, interaction: discord.Interaction):
         if interaction.user.guild is None:
             return
 
-        if interaction.user.id != self.author.id:
+        if interaction.user.id != self.author_id:
             return await interaction.response.send_message(ephemeral=True, content=":x: Its not your mine, use `/mine`")
 
         broke = random.randint(1, 100)

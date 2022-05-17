@@ -28,7 +28,7 @@ async def mine(ctx: discord.ApplicationContext):
 
     field = await generate_random_field()
 
-    await ctx.respond(content=field, view=lib.views.Miner(author=ctx.author))
+    await ctx.respond(content=field, view=lib.views.Miner(author_id=ctx.author.id))
 
 
 @bot.slash_command(name='leaders', description="User leaderboard by mined blocks.")
