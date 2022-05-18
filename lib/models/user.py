@@ -1,6 +1,6 @@
 import discord
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, String
+from sqlalchemy import Column, Integer, DateTime
 from sqlalchemy.exc import NoResultFound
 
 from lib.database import Base, db_session
@@ -16,7 +16,7 @@ class User(Base):
 
     id = Column(Integer, autoincrement=True, unique=True, primary_key=True)
     discord_id = Column(Integer, unique=True)
-    pickaxe_level = Column(String, default="Wood")
+    pickaxe_level = Column(Integer, default=1)
 
     total = Column(Integer, default=0)
 

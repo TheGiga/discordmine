@@ -36,9 +36,12 @@ async def generate_random_field(from_existing: discord.Message = None) -> str:
     def r():
         return random.choice(DEV_BALANCED_LIST)
 
+    # I was thinking of remaking the method of rendering the field, because this is kinda questionable. But idk.
+    # TODO: Rework render someday
     # if field was already created from main command, this code will generate new blocks in front, and move old ones
     if from_existing is not None:
         ex = un_render(from_existing.clean_content.__str__())
+
         line2 = f"{ex[7]}{ex[8]}{ex[9]}{ex[10]}{r()}"
         main = f'{config.VOID}{config.VOID}{config.CHARACTER}{ex[16]}{r()}'
         line4 = f"{ex[19]}{ex[20]}{ex[21]}{ex[22]}{r()}"

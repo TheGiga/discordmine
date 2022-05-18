@@ -9,3 +9,4 @@ DEEPSLATE: str = "<:deepslate:975453592595103744>"
 
 VOID: str = "⬛"
 CHARACTER: str = "<:squashed:975454853411254332>"
+TNT: str = "<:TNT:976220162703392778>"

@@ -43,7 +43,7 @@ async def leaderboard(ctx: discord.ApplicationContext):
         discord_instance = await bot.fetch_user(usr.discord_id)
         lb += f"**{i + 1}.** " \
               f"{str(discord_instance) if discord_instance is not None else usr.discord_id}" \
-              f" - {usr.total}<:stone:975452400078966795>\n"
+              f" - `{usr.total}` <:stone:975452400078966795>\n"
         i += 1
 
     embed = discord.Embed(description=lb, color=discord.Colour.embed_background())
@@ -69,13 +69,15 @@ async def profile(ctx: discord.ApplicationContext, member: discord.Member = None
     embed.set_thumbnail(url='https://i.imgur.com/43tdQd9.png')
 
     embed.add_field(name=f"{config.STONE} Mined blocks", value=str(usr.total))
-    embed.add_field(name='⛏ Pickaxe level', value=usr.pickaxe_level)
+    embed.add_field(name='⛏ Pickaxe level', value=str(usr.pickaxe_level))
 
     embed.set_footer(text='by gigalegit-#0880')
 
-    view = discord.ui.View()
-    button = discord.ui.Button(style=discord.ButtonStyle.gray, label="Upgrade Pickaxe", emoji="⛏", disabled=True)
-    view.add_item(button)
+    if member is not None:
+        cost = 5000 * usr.pickaxe_level
+        view = lib.views.Upgrader(label=f"Upgrade Pickaxe: {cost} stone", author_id=member.id, cost=cost)
+    else:
+        view = None
 
     await ctx.respond(view=view, embed=embed)
 
